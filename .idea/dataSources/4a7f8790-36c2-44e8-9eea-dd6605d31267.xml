@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="test">
-  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.32">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.38">
     <root id="1">
       <ServerVersion>3.36.0</ServerVersion>
     </root>
@@ -1294,10 +1294,10 @@
     </table>
     <table id="477" parent="163" name="utente"/>
     <column id="478" parent="473" name="ID_Ordine">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="479" parent="473" name="ID_utente">
       <DataType>INTEGER|0s</DataType>
@@ -1341,12 +1341,10 @@
     </foreign-key>
     <index id="487" parent="473" name="ordine_ID_Ordine_uindex">
       <ColNames>ID_Ordine</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="488" parent="473" name="sqlite_autoindex_ordine_1">
       <ColNames>ID_Ordine</ColNames>
-      <ColumnCollations></ColumnCollations>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
@@ -1375,7 +1373,6 @@
     </column>
     <index id="494" parent="474" name="sqlite_autoindex_pizza_1">
       <ColNames>nome</ColNames>
-      <ColumnCollations></ColumnCollations>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>

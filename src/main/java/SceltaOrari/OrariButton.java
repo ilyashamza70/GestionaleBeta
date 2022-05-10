@@ -111,7 +111,6 @@ public class OrariButton extends JPanel implements ActionListener {
 
     public int OrderCounter(String orario) {
         int nordini = 0;
-ls
 
         try {
             //Meglio selezionare il numero ordini -> COUNT(ID)
