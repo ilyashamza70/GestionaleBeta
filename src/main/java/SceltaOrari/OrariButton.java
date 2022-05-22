@@ -135,8 +135,8 @@ public class OrariButton extends JPanel implements ActionListener {
     public static void ShowOrder(int nordini, String orario) {
         List<JPanel> panelList = new ArrayList<JPanel>();
         try {
-            ResultSet rs = statement.executeQuery("SELECT ingredienti FROM ordine o JOIN pizza p" +
-                    " ON (o.codpizza = p.codpizza) WHERE orario = '" + orario.trim() + "'");
+            ResultSet rs = statement.executeQuery("SELECT nomepizza,nvoltep,ingredienti  FROM ordine o JOIN pizza p" +
+                    " ON (o.nomepizza = p.nome) WHERE orario = '" + orario.trim() + "'");
 
             while (rs.next()) {
                 JPanel panel = new JPanel();

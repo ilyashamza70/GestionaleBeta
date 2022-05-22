@@ -8,10 +8,11 @@ import java.util.UUID;
 
 public class Utils {
     public static final String JDBC_Driver_SQLite = "org.sqlite.JDBC";
-    public static final String JDBC_URL_SQLite = String.format("jdbc:sqlite:C:test.db"); //Ho provato a mettere test.db come fa nei video
+    public static final String JDBC_URL_SQLite = String.format("jdbc:sqlite:C:Final.db"); //Aggiunto Final come fa lui nei video
             //Paths.get("C:\\Users\\ferri\\PizzaJJJ").toString());
     //dobbiamo mettere il path del database
-
+    //fACCIAMO IN MODO DI METTERLO ALLA FINE UNA VOLTA TUTTO RISOLTO direttamente
+    //all' interno del prj e in modo che genera il file con ordini eventuale all' aperturra e li salvi
 
     // public static final String JDBC_URL_SQLite = String.format("jdbc:sqlite:%s",
     //         Paths.get(Connection.Utils.ooprogrammingdir(), "ooprogramming.sqlite").toString());
