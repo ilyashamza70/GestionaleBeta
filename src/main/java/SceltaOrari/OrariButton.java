@@ -1,5 +1,6 @@
 package SceltaOrari;
 
+import Buttons.TabbedMenu;
 import Connection.DBManager;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrariButton extends JPanel implements ActionListener {
-    Statement statement;
+    static Statement statement;
     {
         try {
             statement = DBManager.getConnection().createStatement();
@@ -32,9 +33,9 @@ public class OrariButton extends JPanel implements ActionListener {
     LocalDateTime now = LocalDateTime.now();
     int time = Integer.parseInt(dtf.format(now));
 
-    List<JButton> buttonList = new ArrayList<JButton>();
-    JButton toRed = new JButton();
-    JButton toOrange = new JButton();
+    static List<JButton> buttonList = new ArrayList<JButton>();
+    static JButton toRed = new JButton();
+    static JButton toOrange = new JButton();
 
     public OrariButton() {
 
@@ -102,6 +103,13 @@ public class OrariButton extends JPanel implements ActionListener {
             if(e.getSource() == buttonList.get(i)) {
                 orario = buttonList.get(i).getText();
                 nordini = OrderCounter(orario);
+                if(nordini >= 3){
+                    int v =JOptionPane.showConfirmDialog(new JFrame(),"Ci sono gia piu di 3 ordini " +
+                            "in questo orario.Sei sicuro di voler continuare?","Piu di 3 ordini vuoi Conitnuare",JOptionPane.YES_NO_OPTION);
+                    if(v == 0)
+                        TabbedMenu.Nextbutton(1);
+                }
+                else TabbedMenu.Nextbutton(1);
                 break;
             }
         }
@@ -124,7 +132,7 @@ public class OrariButton extends JPanel implements ActionListener {
         return nordini;
     }
 
-    public void ShowOrder(int nordini, String orario) {
+    public static void ShowOrder(int nordini, String orario) {
         List<JPanel> panelList = new ArrayList<JPanel>();
         try {
             ResultSet rs = statement.executeQuery("SELECT ingredienti FROM ordine o JOIN pizza p" +
@@ -150,7 +158,7 @@ public class OrariButton extends JPanel implements ActionListener {
         if (optionClicked == JOptionPane.YES_OPTION) { SaveOrder(orario); }
     }
 
-    public void SaveOrder(String orario) {
+    public static void SaveOrder(String orario) {
 
         for(JButton i : buttonList) {
             if(orario.equals(i.getText())) {

@@ -6,8 +6,18 @@ import Pizza.Pizza;
 import SceltaOrari.DisponibilitaOrari;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.Serial;
 import java.sql.SQLException;
+
+/*
+    TabbedMenu crea e gestisce Il frame principale a cui attacca un JTabbedPane Menubar,
+    a cui poi sono collegate tre tab tra cui ci si può muovere usando Prev/Nextbutton, con uso di relativi index
+    numbers.
+    Inoltre qui è presente il main per avviare l' applicazione.
+    Da controllare come rendere disponibile come pacchetto scaricabile da github o APK.
+ */
+
 
 public class TabbedMenu extends JPanel {
     @Serial
@@ -17,6 +27,7 @@ public class TabbedMenu extends JPanel {
     private static JPanel tab1;
     private static JPanel tab2;
     private static JPanel tab3;
+    private static JDialog check;
 
     public static void main (String[] Args) {
         TabbedMenu tm=new TabbedMenu();
@@ -39,11 +50,14 @@ public class TabbedMenu extends JPanel {
 
 
         MenuBar = new JTabbedPane();
-        MenuBar.addTab("Disponibilita Orari",null, new DisponibilitaOrari().DisponibilitaOrari(),
+        tab1 = new DisponibilitaOrari().DisponibilitaOrari();
+        MenuBar.addTab("Disponibilita Orari",null, tab1,
                 "Scegliere l' orario desiderato");
-        MenuBar.addTab("Indirizzo",null, new Indirizzo().Indirizzo(),
+        tab2 = new Indirizzo().Indirizzo();
+        MenuBar.addTab("Indirizzo",null, tab2,
                 "Cerca o crea l' indirizzo con telefono");
-        MenuBar.addTab("Pizza",null, new Pizza().Pizza(),"Scegli o Crea la pizza " +
+        tab3 = new Pizza().Pizza();
+        MenuBar.addTab("Pizza",null, tab3,"Scegli o Crea la pizza " +
                 "aggiungendo ingredienti ");
 
 
@@ -58,6 +72,14 @@ public class TabbedMenu extends JPanel {
 
     }
 
+    public static void Nextbutton(int num){
+        MenuBar.setSelectedIndex(num);
 
+        return ;
+    }
+    public static void Prevbutton(int num){
+        MenuBar.setSelectedIndex(num);
 
+        return ;
+    }
 }

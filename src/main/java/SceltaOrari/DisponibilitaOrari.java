@@ -46,6 +46,10 @@ public class DisponibilitaOrari extends JPanel{
         return mainPanel;
 
     }
+    /*
+    Closer/Saver salva lo stato corrente della tab se viene premuto avanti, ricorda la tab aperta.
+
+     */
     public static JPanel closer(JPanel pfinal) {
         pfinal.setVisible(false);
         return pfinal;
