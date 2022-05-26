@@ -8,12 +8,14 @@ import SceltaOrari.DisponibilitaOrari;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /*
     TabbedMenu crea e gestisce Il frame principale a cui attacca un JTabbedPane Menubar,
     a cui poi sono collegate tre tab tra cui ci si può muovere usando Prev/Nextbutton, con uso di relativi index
-    numbers delle tab oppure usare Show_OrderButton_ActionPerfomed e Fine_SaveOrder in the Pizza_Tab.
+    delle tab oppure usare Show_OrderButton e Fine_SaveOrder in rispettivamente DisponibilitaOrari
+    e Pizza_Tab.
     Inoltre qui è presente il main per avviare l' applicazione.
     Da controllare come rendere disponibile come pacchetto scaricabile da github o APK.
  */
@@ -84,10 +86,12 @@ public class TabbedMenu extends JPanel {
     }
     public static void Finebutton(){
         MenuBar.setSelectedIndex(0);
+
         return;
     }
 
     public static void Carica_Ordine(){
+
 
     }
 }

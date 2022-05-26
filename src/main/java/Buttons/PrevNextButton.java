@@ -12,7 +12,7 @@ import java.text.ParsePosition;
 /*
     Creo 2 buttoni Prev e Next che vanno inseriti all' interno di un Jpanel, in PanelCreator, allineati.
     Da inserie nella tab pizza un bottone fine al posto di Next e magari anche nella tab disponibilita orari
-    al posto di prev metto bottone carica ordine, in caso si vogliano apportare modifiche all' orario o alle
+    al posto di prev metto bottone Show_Order_Button, in caso si vogliano apportare modifiche all' orario o alle
     pizze.
  */
 public class PrevNextButton extends JPanel implements ActionListener {

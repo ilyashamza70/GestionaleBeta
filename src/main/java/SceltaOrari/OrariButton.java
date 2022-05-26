@@ -65,23 +65,23 @@ public class OrariButton extends JPanel implements ActionListener {
 
     public JPanel PanelCreator() {
         JPanel porari = new JPanel(new GridLayout(1, 5));
-
-        if (time <= 18) {
+        //Cambiato orari per vederli dopo le 18... cambiare
+        if (time >= 18) {
             JPanel p18 = new JPanel(new GridLayout(4, 1));
             for (int i = 0; i < 4; i++) { p18.add(buttonList.get(i)); }
             porari.add(p18);
         }
-        if (time <= 19) {
+        if (time >= 19) {
             JPanel p19 = new JPanel(new GridLayout(4, 1));
             for (int i = 4; i < 8; i++) { p19.add(buttonList.get(i)); }
             porari.add(p19);
         }
-        if (time <= 20) {
+        if (time >= 20) {
             JPanel p20 = new JPanel(new GridLayout(4, 1));
             for (int i = 8; i <12; i++) { p20.add(buttonList.get(i)); }
             porari.add(p20);
         }
-        if (time <= 21) {
+        if (time >= 21) {
             JPanel p21 = new JPanel(new GridLayout(4, 1));
             for (int i = 12; i < 16; i++) { p21.add(buttonList.get(i)); }
             porari.add(p21);
@@ -103,13 +103,8 @@ public class OrariButton extends JPanel implements ActionListener {
             if(e.getSource() == buttonList.get(i)) {
                 orario = buttonList.get(i).getText();
                 nordini = OrderCounter(orario);
-                if(nordini >= 3){
-                    int v =JOptionPane.showConfirmDialog(new JFrame(),"Ci sono gia piu di 3 ordini " +
-                            "in questo orario.Sei sicuro di voler continuare?","Piu di 3 ordini vuoi Conitnuare",JOptionPane.YES_NO_OPTION);
-                    if(v == 0)
-                        TabbedMenu.Nextbutton(1);
-                }
-                else TabbedMenu.Nextbutton(1);
+                if(nordini < 1)
+                    TabbedMenu.Nextbutton(1);
                 break;
             }
         }
@@ -133,29 +128,52 @@ public class OrariButton extends JPanel implements ActionListener {
     }
 
     public static void ShowOrder(int nordini, String orario) {
-        List<JPanel> panelList = new ArrayList<JPanel>();
-        try {
-            ResultSet rs = statement.executeQuery("SELECT nomepizza,nvoltep,ingredienti  FROM ordine o JOIN pizza p" +
-                    " ON (o.nomepizza = p.nome) WHERE orario = '" + orario.trim() + "'");
 
+        String ordercols[][] = new String[20][3];
+
+        String nomepizza[]={"Pizza: ","conteggio","Ingredienti"};
+        ResultSet rs;
+        try {
+            if(orario == null){
+                rs = statement.executeQuery(
+                        "SELECT * FROM ordine ");
+            }
+            else {
+                rs = statement.executeQuery(
+                        "SELECT nomepizza,nvoltep,ingredienti FROM ordine WHERE orario = '" + orario.trim() + "'");
+            }
+            int i=0;
             while (rs.next()) {
-                JPanel panel = new JPanel();
+                int j=0;
+                ordercols[i][j++]=rs.getString("nomepizza");
+                ordercols[i][j++]=rs.getString("nvoltep");
+                ordercols[i++][j]=rs.getString("ingredienti");
+
+                /*JPanel panel = new JPanel();
                 panel.add(new JTextArea(rs.getString("ingredienti")));
                 panelList.add(panel);
+                */
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        JPanel ordiniPanel = new JPanel(new GridLayout(1,nordini));
-        for (int i = 0; i < nordini; i++) { ordiniPanel.add(panelList.get(i)); }
+        JTable ShowOrdine = new JTable(ordercols,nomepizza);
+        //JPanel ordiniPanel = new JPanel(new GridLayout(3,nordini));
+        //for (int i = 0; i < nordini; i++) { ordiniPanel.add(panelList.get(i)); }
 
         String[] optionsString = {"Prosegui", "Annulla"};
-        int optionClicked = JOptionPane.showOptionDialog(null, new JScrollPane(ordiniPanel),
+        int optionClicked = JOptionPane.showOptionDialog(null, new JScrollPane(ShowOrdine),
                 "Ordini delle " + orario, JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, optionsString, optionsString[0]);
 
-        if (optionClicked == JOptionPane.YES_OPTION) { SaveOrder(orario); }
+        if (optionClicked == JOptionPane.YES_OPTION) {
+            if(orario != null) {
+                SaveOrder(orario);
+                TabbedMenu.Nextbutton(1);
+            }
+        }
     }
 
     public static void SaveOrder(String orario) {
