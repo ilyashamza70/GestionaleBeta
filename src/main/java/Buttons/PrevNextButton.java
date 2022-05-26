@@ -115,6 +115,7 @@ public class PrevNextButton extends JPanel implements ActionListener {
         if(e.getSource() == Fine){
             //Salvo tutto e mostro tutte le pizze prima di salvare e mandare comando per database durata 2 secondi.
 
+            TabbedMenu.Finebutton();
             //salvare l'ordine e tornare alla pagina disponibilita orari
         }
         if(e.getSource() == Carica_Ordine){

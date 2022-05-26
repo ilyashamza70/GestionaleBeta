@@ -63,6 +63,15 @@ or name //Tofinalize add tag.
 Last tab is Pizza where you can create and add pizzas to the order in ordine table
 of db //Tofinalize add tag.
 
+# TaabbedMenu
+Class with main that creates JTabbedPane called MenuBar but it is for tab.
+//Possible idea can be to add real MenuBar that adds pizza and ingredients 
+//That the pizzeria needs or has as special pizzas.
+Adds to the tab relative frames depending on which tab we are in.
+it also contains the ActionPewrformed for PrevNext Button and 
+Fine in DisponibilitaOrari_Tab and ShowOrder in Pizza_Tab
+
+
 # PrevNextButton Class
 
 There is the Order button in first tab that shows you
@@ -74,3 +83,4 @@ Fine_button in that saves the order and adds
 its tuple or whatever to the table of ordine.
 Then there shoul be an update on the buttons color after 
 which it shows you the saved order //Tofinalize add tag.
+
