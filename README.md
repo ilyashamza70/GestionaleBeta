@@ -13,6 +13,8 @@ configured as same as test.db, now is the main db.
 
 We have three tabs added in the JTabbedPane:
 * DisponibilitaOrari:
+![image](https://user-images.githubusercontent.com/70276386/181448448-2eced1bd-2a26-4044-b964-822f27893e14.png)
+
   * First we have a JLabel on the north
   * We Displays time buttons, in the center of the frame,
   from 18 to 22 and by pressing one you should choose it as
@@ -20,7 +22,9 @@ We have three tabs added in the JTabbedPane:
   Order dB with curreent date
   * Then we have two buttons glued horrizontally at the end 
   of the Frame different depending on the tab we are in.
+  
 * Indirizzo:
+![image](https://user-images.githubusercontent.com/70276386/181448643-6975f4fd-6288-46ff-bbec-c81dcf99ebc7.png)
   * we have on the north a serchBar connected to the table 
   utente in th db which is allocated dynamically and a cutomer
   is added everytime it is used as an order with.
@@ -30,7 +34,11 @@ We have three tabs added in the JTabbedPane:
   if selected it should directly take you to Pizza_Tab //ToImplement
   * At the end of the frame we have PrevNewxtButtone glued horizontally
   but if triggered without selection they should generate a warning.
+  
+
 * Pizza:
+![image](https://user-images.githubusercontent.com/70276386/181448886-5d4a9bc6-cb8f-488e-8531-45e98a7b71dd.png)
+
   * Here the Frame is divided in 4 parts with GridLayout //Look how to make
   hgap and vgap automatic according to the frame_size:
     * Top Left we have a JTable thats sums up all the pizza in the current
@@ -45,6 +53,8 @@ We have three tabs added in the JTabbedPane:
     adds the variant as first ingredient and ingredients with the +
     button can be added.They will appear also on the Ingredient Column
     //To configure maybe put variants in a different color in >Ingredient Column.
+    
+
 
 *Then we have two buttons glued horrizontally at the end
 of the Frame different depending on the tab we are in.
