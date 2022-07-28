@@ -12,7 +12,7 @@ public class Pizza extends JPanel {
     public static JPanel Pizza(){
 
         JPanel pizza = new JPanel(new BorderLayout());
-        pizza.add(new PizzaButton().PanelCreator(), BorderLayout.NORTH);
+        pizza.add(new PizzaButton().PanelCreator(), BorderLayout.CENTER);
         pizza.add(PAGE_END ,new PrevNextButton().PanelCreator("Pizza"));
         JPanel pizzab = new JPanel(new BorderLayout());
 

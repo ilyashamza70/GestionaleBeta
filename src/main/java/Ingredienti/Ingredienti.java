@@ -14,7 +14,6 @@ public class Ingredienti extends JFrame{
         super("Aggiungi Ingredienti");
 
         JPanel pfinal = new JPanel(new BorderLayout());
-        pfinal.add(new RicercaIndirizzo().PanelCreator(), BorderLayout.NORTH);
 
 
         /* JFrame methods called */

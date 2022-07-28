@@ -6,9 +6,9 @@ import Pizza.Pizza;
 import SceltaOrari.DisponibilitaOrari;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.io.Serial;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
 /*
@@ -25,11 +25,10 @@ public class TabbedMenu extends JPanel {
     @Serial
     private static final long serialVersionUID = 1L;
     private static JTabbedPane MenuBar;
-    private static JPanel Panel;
+
     private static JPanel tab1;
     private static JPanel tab2;
-    private static JPanel tab3;
-    private static JDialog check;
+    public static JPanel tab3;
 
     public static void main (String[] Args) {
         TabbedMenu tm=new TabbedMenu();
@@ -48,9 +47,6 @@ public class TabbedMenu extends JPanel {
     public TabbedMenu(){
         JFrame frame = new JFrame("GestionalePizzeria interface");
 
-
-
-
         MenuBar = new JTabbedPane();
         tab1 = new DisponibilitaOrari().DisponibilitaOrari();
         MenuBar.addTab("Disponibilita Orari",null, tab1,
@@ -68,26 +64,22 @@ public class TabbedMenu extends JPanel {
                             // per ogni tab del JTabbedMenu
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(800,650);
+        frame.setSize(1000,750);
         frame.setResizable(true);
-
 
     }
 
     public static void Nextbutton(int num){
         MenuBar.setSelectedIndex(num);
 
-        return ;
     }
     public static void Prevbutton(int num){
         MenuBar.setSelectedIndex(num);
 
-        return ;
     }
     public static void Finebutton(){
         MenuBar.setSelectedIndex(0);
 
-        return;
     }
 
     public static void Carica_Ordine(){

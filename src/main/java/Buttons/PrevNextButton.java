@@ -1,5 +1,6 @@
 package Buttons;
 
+import Pizza.RiepilogoPizze;
 import SceltaOrari.DisponibilitaOrari;
 import Indirizzo.Indirizzo;
 import SceltaOrari.OrariButton;
@@ -38,7 +39,7 @@ public class PrevNextButton extends JPanel implements ActionListener {
 
     public JPanel PanelCreator(String posizione) {
         JPanel pprevnext = new JPanel();
-        if (posizione.equals("SceltaOrari.DisponibilitaOrari")) {
+        if (posizione.equals("DisponibilitaOrari")) {
             pprevnext.setLayout(new BoxLayout(pprevnext, BoxLayout.LINE_AXIS));
             pprevnext.add(Carica_Ordine);
             pprevnext.add(Box.createHorizontalGlue());
@@ -103,7 +104,7 @@ public class PrevNextButton extends JPanel implements ActionListener {
         }
         if(e.getSource() == NextButton) {
             switch (interfaccia) {
-                case "SceltaOrari.DisponibilitaOrari":
+                case "DisponibilitaOrari":
                     TabbedMenu.Nextbutton(1);
                     break;
                 case "Indirizzo":
@@ -114,13 +115,14 @@ public class PrevNextButton extends JPanel implements ActionListener {
         }
         if(e.getSource() == Fine){
             //Salvo tutto e mostro tutte le pizze prima di salvare e mandare comando per database durata 2 secondi.
-
+            RiepilogoPizze.db_update();
             TabbedMenu.Finebutton();
             //salvare l'ordine e tornare alla pagina disponibilita orari
         }
         if(e.getSource() == Carica_Ordine){
             //Apre tutti gli ordini salvati della giornata;
             OrariButton.ShowOrder(0,null);
+            TabbedMenu.Nextbutton(1);
         }
     }
 }

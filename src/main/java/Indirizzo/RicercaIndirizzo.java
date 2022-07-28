@@ -2,6 +2,8 @@ package Indirizzo;
 
 import Connection.DBManager;
 import CostumeUtils.CostumeBorder;
+import Pizza.RiepilogoOrdine;
+import Pizza.RiepilogoPizze;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,7 +19,7 @@ import java.util.Locale;
 
 public class RicercaIndirizzo extends JPanel implements ActionListener, FocusListener, KeyListener {
     List<String> indirizziList = new ArrayList<String>();
-    Statement statement;
+    public static Statement statement;
     {
         try {
             statement = DBManager.getConnection().createStatement();
@@ -26,6 +28,7 @@ public class RicercaIndirizzo extends JPanel implements ActionListener, FocusLis
             while (rs.next()) {
                 indirizziList.add(rs.getString("indirizzo").toLowerCase(Locale.ROOT));
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -83,6 +86,8 @@ public class RicercaIndirizzo extends JPanel implements ActionListener, FocusLis
         };
         resultTable = new JTable(data, columnNames);
         resultTable.addFocusListener(this);
+        //resultTable.getSelectionModel().isSelectionEmpty();   Add selection madel to detect changes and if it is selected
+        resultTable.addNotify();
         resultTable.removeEditor();
     }
 
@@ -144,6 +149,7 @@ public class RicercaIndirizzo extends JPanel implements ActionListener, FocusLis
     @Override
     public void actionPerformed(ActionEvent e) {
         String telephoneNumber = searchbarText.getText().trim();
+
        /* if (e.getSource() == searchButton) {
             try {
                 ResultSet rs = statement.executeQuery("SELECT * FROM utente" +
@@ -198,7 +204,7 @@ public class RicercaIndirizzo extends JPanel implements ActionListener, FocusLis
         */
     }
 
-    private void SaveProfile(String telephoneNumber, Boolean saveInDB) {
+    public void SaveProfile(String telephoneNumber, Boolean saveInDB) {
         JTextField telephoneTextField = new JTextField(telephoneNumber);
         JTextField citofonoTextField = new JTextField();
         JTextField indirizzoTextField = new JTextField();
@@ -236,6 +242,7 @@ public class RicercaIndirizzo extends JPanel implements ActionListener, FocusLis
         }
     }
 
+
     @Override
     public void focusGained(FocusEvent e) {
         if (e.getSource() == searchbarText &&
@@ -248,11 +255,33 @@ public class RicercaIndirizzo extends JPanel implements ActionListener, FocusLis
             String citofono = String.valueOf(resultTable.getValueAt(row, 0));
             String indirizzo = String.valueOf(resultTable.getValueAt(row, 1));
             String telefono = String.valueOf(resultTable.getValueAt(row, 2));
+            RiepilogoOrdine.setNome(citofono);
+            RiepilogoOrdine.setIndirizzo(indirizzo);
+            RiepilogoOrdine.setNumero(telefono);
+
+            {
+                try {
+                    statement = DBManager.getConnection().createStatement();
+                    ResultSet rs = statement.executeQuery("SELECT nomepizza AS nomepizza,nvoltep AS nvoltep,ingredienti AS ingredienti " +
+                            " FROM ordine JOIN utente u on ordine.ID_utente = u.ID_utente " +
+                            "WHERE citofono = '" + citofono.trim() + "'"  );
+
+                    RiepilogoPizze.SelectedOrder(rs);   //manda il resultset al JTable di RiepilogoPizza
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+
+            //RiepilogoPizze.update_riepilogo_pizza(citofono);
+
         }
     }
 
     @Override
-    public void focusLost(FocusEvent e) { }
+    public void focusLost(FocusEvent e) {
+
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {

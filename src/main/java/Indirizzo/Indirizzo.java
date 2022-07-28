@@ -10,7 +10,7 @@ import static java.awt.BorderLayout.PAGE_END;
 
 public class Indirizzo extends JPanel {
 
-    public static JPanel Indirizzo() {
+    public JPanel Indirizzo() {
 
         JPanel pfinal = new JPanel(new BorderLayout());
         pfinal.add(new RicercaIndirizzo().PanelCreator(), BorderLayout.CENTER);

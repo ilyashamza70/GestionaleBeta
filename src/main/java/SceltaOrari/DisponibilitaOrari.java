@@ -39,7 +39,7 @@ public class DisponibilitaOrari extends JPanel{
         centernorth.add(new JLabel ("Scegliere l'orario di consegna:"));
         mainPanel.add(NORTH,centernorth);
         mainPanel.add(CENTER,new OrariButton().PanelCreator());
-        mainPanel.add(PAGE_END ,new PrevNextButton().PanelCreator("SceltaOrari.DisponibilitaOrari"));
+        mainPanel.add(PAGE_END ,new PrevNextButton().PanelCreator("DisponibilitaOrari"));
         mainPanel.setVisible(true);
 
 

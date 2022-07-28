@@ -2,6 +2,7 @@ package SceltaOrari;
 
 import Buttons.TabbedMenu;
 import Connection.DBManager;
+import Pizza.RiepilogoOrdine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class OrariButton extends JPanel implements ActionListener {
     static Statement statement;
+
     {
         try {
             statement = DBManager.getConnection().createStatement();
@@ -33,9 +35,11 @@ public class OrariButton extends JPanel implements ActionListener {
     LocalDateTime now = LocalDateTime.now();
     int time = Integer.parseInt(dtf.format(now));
 
-    static List<JButton> buttonList = new ArrayList<JButton>();
+    public static List<JButton> buttonList = new ArrayList<JButton>();
     static JButton toRed = new JButton();
     static JButton toOrange = new JButton();
+    
+
 
     public OrariButton() {
 
@@ -63,25 +67,28 @@ public class OrariButton extends JPanel implements ActionListener {
         }
     }
 
+
+
     public JPanel PanelCreator() {
         JPanel porari = new JPanel(new GridLayout(1, 5));
         //Cambiato orari per vederli dopo le 18... cambiare
-        if (time >= 18) {
+        if (time <= 18) {
             JPanel p18 = new JPanel(new GridLayout(4, 1));
             for (int i = 0; i < 4; i++) { p18.add(buttonList.get(i)); }
             porari.add(p18);
         }
-        if (time >= 19) {
+
+        if (time <= 19) {
             JPanel p19 = new JPanel(new GridLayout(4, 1));
             for (int i = 4; i < 8; i++) { p19.add(buttonList.get(i)); }
             porari.add(p19);
         }
-        if (time >= 20) {
+        if (time <= 20) {
             JPanel p20 = new JPanel(new GridLayout(4, 1));
             for (int i = 8; i <12; i++) { p20.add(buttonList.get(i)); }
             porari.add(p20);
         }
-        if (time >= 21) {
+        if (time <= 21) {
             JPanel p21 = new JPanel(new GridLayout(4, 1));
             for (int i = 12; i < 16; i++) { p21.add(buttonList.get(i)); }
             porari.add(p21);
@@ -94,6 +101,7 @@ public class OrariButton extends JPanel implements ActionListener {
         return porari;
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         int nordini = 0;
@@ -102,7 +110,8 @@ public class OrariButton extends JPanel implements ActionListener {
         for(int i = 0; i < 20; i++) {
             if(e.getSource() == buttonList.get(i)) {
                 orario = buttonList.get(i).getText();
-                nordini = OrderCounter(orario);
+                nordini = OrderCounter(orario);     //Conta gli ordini che se sono superiori a 1 metto orange se > 3 red
+                RiepilogoOrdine.setOrario(orario);  //Upodate nel pannello pizze in Riepilogo ordine viene aggiunto l' orario
                 if(nordini < 1)
                     TabbedMenu.Nextbutton(1);
                 break;
@@ -110,6 +119,7 @@ public class OrariButton extends JPanel implements ActionListener {
         }
         if (nordini > 0) { ShowOrder(nordini, orario); }
         else SaveOrder(orario);
+
     }
 
     public int OrderCounter(String orario) {
@@ -117,7 +127,8 @@ public class OrariButton extends JPanel implements ActionListener {
 
         try {
             //Meglio selezionare il numero ordini -> COUNT(ID)
-            // oppure il numero di pizze -> COUNT(*)    ???
+            // oppure il numero di pizze -> COUNT(*)
+            // Per ora teniamo count(*)
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS nordini FROM ordine WHERE orario = '"
                     + orario.trim() + "'");
             nordini = rs.getInt("nordini");
@@ -129,22 +140,24 @@ public class OrariButton extends JPanel implements ActionListener {
 
     public static void ShowOrder(int nordini, String orario) {
 
-        String ordercols[][] = new String[20][3];
+        String ordercols[][] = new String[20][4];
 
-        String nomepizza[]={"Pizza: ","conteggio","Ingredienti"};
+        String nomepizza[]=new String[]{"Nome","Pizza","Conteggio","Ingredienti"};
         ResultSet rs;
         try {
             if(orario == null){
+
                 rs = statement.executeQuery(
-                        "SELECT * FROM ordine ");
+                        "SELECT  citofono,nomepizza,nvoltep,ingredienti FROM ordine JOIN utente u on u.ID_utente = ordine.ID_utente ");
             }
             else {
                 rs = statement.executeQuery(
-                        "SELECT nomepizza,nvoltep,ingredienti FROM ordine WHERE orario = '" + orario.trim() + "'");
+                        "SELECT citofono,nomepizza,nvoltep,ingredienti FROM ordine JOIN utente u on u.ID_utente = ordine.ID_utente WHERE orario = '" + orario.trim() + "'");
             }
             int i=0;
             while (rs.next()) {
                 int j=0;
+                ordercols[i][j++]=rs.getString("citofono");
                 ordercols[i][j++]=rs.getString("nomepizza");
                 ordercols[i][j++]=rs.getString("nvoltep");
                 ordercols[i++][j]=rs.getString("ingredienti");
